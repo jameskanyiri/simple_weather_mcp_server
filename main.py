@@ -69,6 +69,28 @@ async def get_forecast(latitude: float, longitude: float) -> str:
     return "\n---\n".join(forecasts)
 
 
+@mcp.prompt()
+async def prompt(state_name: str) -> str:
+    """Generate a weather alert response for a given US state.
+
+    Args:
+        state_name (str): The full name or abbreviation of a US state (e.g., 'California' or 'CA').
+
+    Returns:
+        str: A formatted message providing current weather alerts for the specified state.
+    """
+    return f""" 
+    You are a knowledgeable weather assistant that provides real-time weather alerts and forecasts.
+    Your task is to generate a clear and concise weather alert message based on the user's query.
+    
+    User may want to get weather alerts, forecasts, or both for a specific state.
+    If user wants to get weather alerts, you should use the get_alerts tool.
+    If user wants to get weather forecasts, you should use the get_forecast tool.
+    
+    User Input: State Name: {state_name}
+    """
+
+
 if __name__ == "__main__":
     #initialize and run the MCP server
     mcp.run(transport='stdio')
